@@ -88,5 +88,9 @@ ENV GROQ_API_KEY=${GROQ_API_KEY} \
     DEFAULT_NUM_CTX=${DEFAULT_NUM_CTX}\
     RUNNING_IN_DOCKER=true
 
+ENV NODE_OPTIONS=--openssl-legacy-provider
+RUN npm config set strict-ssl false && npm config set sign-git-tag false
+
+
 RUN mkdir -p ${WORKDIR}/run
 CMD pnpm run dev --host
