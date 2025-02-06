@@ -6,6 +6,7 @@ WORKDIR /app
 # Install dependencies (this step is cached as long as the dependencies don't change)
 COPY package.json pnpm-lock.yaml ./
 
+RUN npm install -g corepack@latest
 RUN corepack enable pnpm && pnpm install
 
 # Copy the rest of your app's source code
@@ -87,9 +88,6 @@ ENV GROQ_API_KEY=${GROQ_API_KEY} \
     VITE_LOG_LEVEL=${VITE_LOG_LEVEL} \
     DEFAULT_NUM_CTX=${DEFAULT_NUM_CTX}\
     RUNNING_IN_DOCKER=true
-
-ENV NODE_OPTIONS=--openssl-legacy-provider
-RUN npm config set strict-ssl false && npm config set sign-git-tag false
 
 
 RUN mkdir -p ${WORKDIR}/run
